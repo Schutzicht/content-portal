@@ -33,6 +33,24 @@ function hexToRgb(hex: string) {
 }
 const brandRgb = hexToRgb(primaryColor);
 
+function getContrastColor(hex: string) {
+    const hexColor = hex.startsWith("#") ? hex.substring(1) : hex;
+    if(hexColor.length !== 6 && hexColor.length !== 3) return '#ffffff';
+    let r, g, b;
+    if (hexColor.length === 3) {
+        r = parseInt(hexColor[0]+hexColor[0],16);
+        g = parseInt(hexColor[1]+hexColor[1],16);
+        b = parseInt(hexColor[2]+hexColor[2],16);
+    } else {
+        r = parseInt(hexColor.substr(0,2),16);
+        g = parseInt(hexColor.substr(2,2),16);
+        b = parseInt(hexColor.substr(4,2),16);
+    }
+    const yiq = ((r*299)+(g*587)+(b*114))/1000;
+    return (yiq >= 140) ? '#0f172a' : '#ffffff';
+}
+const brandText = getContrastColor(primaryColor);
+
 // Adjust page title
 let pageTitle = title.includes(siteTitle) ? title : `${title} - ${siteTitle}`;
 if (title === siteTitle || title === "Home") pageTitle = siteTitle;
@@ -47,9 +65,10 @@ if (title === siteTitle || title === "Home") pageTitle = siteTitle;
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={`Aanlever tool voor ${siteTitle}.`} />
 		<title>{pageTitle}</title>
-        <style is:global define:vars={{ brandRgb: brandRgb }}>
+        <style is:global define:vars={{ brandRgb: brandRgb, brandText: brandText }}>
             :root {
                 --color-brand: var(--brandRgb);
+                --color-brand-text: var(--brandText);
             }
         </style>
 	</head>

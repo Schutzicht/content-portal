@@ -17,6 +17,7 @@ export default {
                     950: '#082f49',
                 },
                 'brand': 'rgb(var(--color-brand) / <alpha-value>)',
+                'brand-text': 'var(--color-brand-text)',
                 'cyan-focus': '#00ffff',
             },
             fontFamily: {
