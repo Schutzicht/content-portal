@@ -1,0 +1,528 @@
+---
+import Layout from '../layouts/Layout.astro';
+import db from '../db/database';
+
+const isAuthenticated = Astro.cookies.get('portal_auth')?.value === 'authenticated';
+if (!isAuthenticated) {
+    return Astro.redirect('/login');
+}
+
+const socialRes = await db.execute(`SELECT * FROM social_submissions ORDER BY createdAt DESC`);
+const socialSubs = socialRes.rows;
+
+const nieuwsRes = await db.execute(`SELECT * FROM nieuws_submissions ORDER BY createdAt DESC`);
+const nieuwsSubs = nieuwsRes.rows;
+
+const wijzRes = await db.execute(`SELECT * FROM wijzigingen_submissions ORDER BY createdAt DESC`);
+const wijzSubs = wijzRes.rows;
+
+const settingsRes = await db.execute(`SELECT * FROM settings WHERE id = 1`);
+const settings = settingsRes.rows[0] || {};
+const siteTitle = String(settings.site_title || 'Content Portal');
+const primaryColor = String(settings.primary_color || '#2D3FE0');
+const teamMembers = String(settings.team_members || '[]');
+const moduleSocial = settings.module_social !== undefined ? Number(settings.module_social) : 1;
+const moduleNieuws = settings.module_nieuws !== undefined ? Number(settings.module_nieuws) : 1;
+const moduleWijzigingen = settings.module_wijzigingen !== undefined ? Number(settings.module_wijzigingen) : 1;
+let parsedTeamMembers: string[] = [];
+try { parsedTeamMembers = JSON.parse(teamMembers); } catch(e) {}
+---
+
+<Layout title="Content Portal - Dashboard">
+    <div class="space-y-10 reveal max-w-7xl mx-auto pb-20">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+            <div>
+                <h1 class="text-3xl md:text-4xl font-display font-bold text-dark">
+                    Centraal <span class="bg-gradient-to-r from-indigo to-violet bg-clip-text text-transparent">Dashboard</span>
+                </h1>
+                <p class="text-text-secondary mt-2">Overzicht van alle binnengekomen aanmeldingen.</p>
+            </div>
+            <a href="/" class="bg-white border border-warm-grey hover:border-brand px-5 py-2.5 rounded-xl font-semibold text-dark hover:text-brand transition-colors inline-flex items-center gap-2 shadow-sm">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-5">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
+                </svg>
+                Nieuwe Invoer
+            </a>
+        </div>
+
+        <!-- Tabs -->
+        <div class="bg-white/50 backdrop-blur-md p-2 rounded-2xl border border-warm-grey shadow-sm flex flex-col sm:flex-row gap-2 w-full justify-between items-center relative z-10">
+            <div class="flex flex-wrap gap-2 w-full sm:w-auto">
+                <button id="tab-social" class="tab-btn active px-5 py-2.5 rounded-xl text-sm font-bold transition-all bg-brand/10 text-brand shadow-sm flex items-center justify-center gap-2 flex-1 sm:flex-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75a2.25 2.25 0 0 0-2.25-2.25H13.5m-3 0V3h3V1.5m-3 0h3m-3 18.75h3" />
+                    </svg>
+                    Social ({socialSubs.length})
+                </button>
+                <button id="tab-nieuws" class="tab-btn px-5 py-2.5 rounded-xl text-sm font-bold text-text-secondary hover:bg-cream-dark transition-all flex items-center justify-center gap-2 flex-1 sm:flex-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4">
+                      <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z" />
+                    </svg>
+                    Nieuwsartikelen ({nieuwsSubs.length})
+                </button>
+                <button id="tab-wijziging" class="tab-btn px-5 py-2.5 rounded-xl text-sm font-bold text-text-secondary hover:bg-cream-dark transition-all flex items-center justify-center gap-2 flex-1 sm:flex-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
+                    </svg>
+                    Wijzigingen ({wijzSubs.length})
+                </button>
+            </div>
+            <button id="tab-settings" class="tab-btn px-5 py-2.5 rounded-xl text-sm font-bold text-text-secondary hover:bg-cream-dark transition-all flex items-center gap-2 w-full sm:w-auto justify-center">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.99l1.005.828c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                </svg>
+                Instellingen
+            </button>
+        </div>
+
+        <!-- SOCIAL PANE -->
+        <div id="pane-social" class="pane block space-y-8">
+            {socialSubs.length === 0 ? (
+                <div class="bg-white p-10 rounded-3xl border border-warm-grey shadow-sm text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-brand/10 text-brand rounded-full flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H6.911a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661Z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-display font-bold text-dark mb-2">Geen social updates gevonden</h3>
+                    <p class="text-text-secondary">Er zijn nog geen social updates ingediend.</p>
+                </div>
+            ) : (
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    {socialSubs.map((c) => (
+                        <div class="bg-white/50 backdrop-blur-md rounded-3xl shadow-xl border border-warm-grey overflow-hidden flex flex-col relative group hover:-translate-y-1 transition-transform">
+                            <div class="absolute top-0 left-0 w-full h-1.5 bg-brand"></div>
+                            <div class="p-8 flex-grow space-y-5">
+                                <div class="flex items-start justify-between gap-4">
+                                    <h2 class="text-xl font-display font-bold text-dark leading-tight group-hover:text-brand transition-colors">
+                                        {c.wat}
+                                    </h2>
+                                    {c.timing && (
+                                        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold border whitespace-nowrap bg-brand/10 text-brand border-brand/20">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-3.5">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 3v2.25M17.25 3v2.25M3 18.75V7.5a2.25 2.25 0 0 1 2.25-2.25h13.5A2.25 2.25 0 0 1 21 7.5v11.25m-18 0A2.25 2.25 0 0 0 5.25 21h13.5A2.25 2.25 0 0 0 21 18.75m-18 0v-7.5A2.25 2.25 0 0 1 5.25 9h13.5A2.25 2.25 0 0 1 21 11.25v7.5" />
+                                            </svg>
+                                            {c.timing}
+                                        </span>
+                                    )}
+                                </div>
+                                
+                                <div class="grid grid-cols-2 gap-4 pt-4 border-t border-warm-grey text-sm">
+                                    {c.waar && (
+                                        <div class="space-y-1">
+                                            <span class="text-xs font-bold text-muted uppercase tracking-wider">Waar</span>
+                                            <p class="font-medium text-dark">{c.waar}</p>
+                                        </div>
+                                    )}
+                                    {c.waarom && (
+                                        <div class="space-y-1">
+                                            <span class="text-xs font-bold text-muted uppercase tracking-wider">Doel</span>
+                                            <p class="font-medium text-dark">{c.waarom}</p>
+                                        </div>
+                                    )}
+                                    {c.partners && (
+                                        <div class="space-y-1 col-span-2">
+                                            <span class="text-xs font-bold text-muted uppercase tracking-wider">Partners</span>
+                                            <p class="font-medium text-dark">{c.partners}</p>
+                                        </div>
+                                    )}
+                                    {c.contactPersoon && (
+                                        <div class="space-y-1 col-span-2">
+                                            <span class="text-xs font-bold text-muted uppercase tracking-wider">Contact</span>
+                                            <p class="font-medium text-dark">{c.contactPersoon} {c.contactGegevens ? `(${c.contactGegevens})` : ''}</p>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {c.toelichting && (
+                                    <div class="space-y-2">
+                                        <span class="text-xs font-bold text-muted uppercase tracking-wider">Toelichting</span>
+                                        <div class="bg-cream-dark rounded-xl p-4 text-sm text-text-secondary italic leading-relaxed">
+                                            "{c.toelichting}"
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+
+                            <div class="bg-cream/50 p-4 border-t border-warm-grey flex items-center justify-between gap-4 mt-auto backdrop-blur-md">
+                                <div>
+                                    {c.fotos && (
+                                        <a href={String(c.fotos).startsWith('http') ? String(c.fotos) : `https://${c.fotos}`} target="_blank" class="text-sm font-semibold text-brand hover:text-brand-light flex items-center gap-1.5 transition-colors">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="m18.375 12.739-7.693 7.693a4.5 4.5 0 0 1-6.364-6.364l10.94-10.94A3 3 0 1 1 19.5 7.372L8.552 18.32m.009-.01-.01.01m5.699-9.941-7.81 7.81a1.5 1.5 0 0 0 2.112 2.13" />
+                                            </svg>
+                                            Beelden
+                                        </a>
+                                    )}
+                                </div>
+                                <button
+                                    class="magnetic-btn bg-white border border-warm-grey hover:border-brand px-4 py-2 rounded-lg text-sm font-bold text-dark hover:bg-brand hover:text-white transition-all shadow-sm flex items-center gap-2"
+                                    data-type="social"
+                                    data-wat={c.wat}
+                                    data-waar={c.waar}
+                                    data-waarom={c.waarom}
+                                    data-partners={c.partners}
+                                    data-toelichting={c.toelichting}
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" />
+                                    </svg>
+                                    Kopieer als concept
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
+
+        <!-- NIEUWS PANE -->
+        <div id="pane-nieuws" class="pane hidden space-y-8">
+            {nieuwsSubs.length === 0 ? (
+                <div class="bg-white p-10 rounded-3xl border border-warm-grey shadow-sm text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-brand/10 text-brand rounded-full flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 13.5h3.86a2.25 2.25 0 0 1 2.012 1.244l.256.512a2.25 2.25 0 0 0 2.013 1.244h3.218a2.25 2.25 0 0 0 2.013-1.244l.256-.512a2.25 2.25 0 0 1 2.013-1.244h3.859m-19.5.338V18a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18v-4.162c0-.224-.034-.447-.1-.661L19.24 5.338a2.25 2.25 0 0 0-2.15-1.588H6.911a2.25 2.25 0 0 0-2.15 1.588L2.35 13.177a2.25 2.25 0 0 0-.1.661Z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-display font-bold text-dark mb-2">Geen nieuwsartikelen gevonden</h3>
+                    <p class="text-text-secondary">Er zijn nog geen nieuwsartikelen ingediend.</p>
+                </div>
+            ) : (
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    {nieuwsSubs.map((n) => (
+                        <div class="bg-white/50 backdrop-blur-md rounded-3xl shadow-xl border border-warm-grey overflow-hidden flex flex-col relative group hover:-translate-y-1 transition-transform">
+                            <div class="absolute top-0 left-0 w-full h-1.5 bg-violet"></div>
+                            <div class="p-8 flex-grow space-y-5">
+                                <h2 class="text-xl font-display font-bold text-dark leading-tight group-hover:text-violet transition-colors">
+                                    {n.titel}
+                                </h2>
+                                
+                                <div class="grid grid-cols-2 gap-4 pt-4 border-t border-warm-grey text-sm">
+                                    {n.doelgroep && (
+                                        <div class="space-y-1">
+                                            <span class="text-xs font-bold text-muted uppercase tracking-wider">Doelgroep</span>
+                                            <p class="font-medium text-dark">{n.doelgroep}</p>
+                                        </div>
+                                    )}
+                                    {n.wanneer && (
+                                        <div class="space-y-1">
+                                            <span class="text-xs font-bold text-muted uppercase tracking-wider">Publiceren</span>
+                                            <p class="font-medium text-dark">{n.wanneer}</p>
+                                        </div>
+                                    )}
+                                    {n.betrokkenen && (
+                                        <div class="space-y-1 col-span-2">
+                                            <span class="text-xs font-bold text-muted uppercase tracking-wider">Betrokkenen / Bronnen</span>
+                                            <p class="font-medium text-dark">{n.betrokkenen}</p>
+                                        </div>
+                                    )}
+                                    {n.contactPersoon && (
+                                        <div class="space-y-1 col-span-2">
+                                            <span class="text-xs font-bold text-muted uppercase tracking-wider">Auteur / Contact</span>
+                                            <p class="font-medium text-dark">{n.contactPersoon} {n.contactGegevens ? `(${n.contactGegevens})` : ''}</p>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {n.inhoud && (
+                                    <div class="space-y-2">
+                                        <span class="text-xs font-bold text-muted uppercase tracking-wider">Inhoud</span>
+                                        <div class="bg-cream-dark rounded-xl p-4 text-sm text-text-secondary leading-relaxed line-clamp-5">
+                                            {n.inhoud}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+
+                            <div class="bg-cream/50 p-4 border-t border-warm-grey flex items-center justify-between gap-4 mt-auto backdrop-blur-md">
+                                <div>
+                                    {n.fotos && (
+                                        <a href={String(n.fotos).startsWith('http') ? String(n.fotos) : `https://${n.fotos}`} target="_blank" class="text-sm font-semibold text-violet hover:text-brand flex items-center gap-1.5 transition-colors">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="m18.375 12.739-7.693 7.693a4.5 4.5 0 0 1-6.364-6.364l10.94-10.94A3 3 0 1 1 19.5 7.372L8.552 18.32m.009-.01-.01.01m5.699-9.941-7.81 7.81a1.5 1.5 0 0 0 2.112 2.13" />
+                                            </svg>
+                                            Beeldmateriaal
+                                        </a>
+                                    )}
+                                </div>
+                                <button
+                                    class="copy-btn magnetic-btn bg-white border border-warm-grey hover:border-violet px-4 py-2 rounded-lg text-sm font-bold text-dark hover:bg-violet hover:text-white transition-all shadow-sm flex items-center gap-2"
+                                    data-type="nieuws"
+                                    data-titel={n.titel}
+                                    data-inhoud={n.inhoud}
+                                    data-doelgroep={n.doelgroep}
+                                    data-wanneer={n.wanneer}
+                                    data-betrokkenen={n.betrokkenen}
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" />
+                                    </svg>
+                                    Kopieer artikel
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
+
+        <!-- WIJZIGINGEN PANE -->
+        <div id="pane-wijziging" class="pane hidden space-y-8">
+            {wijzSubs.length === 0 ? (
+                <div class="bg-white p-10 rounded-3xl border border-warm-grey shadow-sm text-center">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-emerald-500/10 text-emerald-500 rounded-full flex items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-display font-bold text-dark mb-2">Geen wijzigingen gevonden</h3>
+                    <p class="text-text-secondary">Er zijn nog geen website wijzigingen ingediend.</p>
+                </div>
+            ) : (
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    {wijzSubs.map((w) => (
+                        <div class="bg-white/50 backdrop-blur-md rounded-3xl shadow-xl border border-warm-grey overflow-hidden flex flex-col relative group hover:-translate-y-1 transition-transform">
+                            <div class="absolute top-0 left-0 w-full h-1.5 bg-emerald-500"></div>
+                            <div class="p-8 flex-grow space-y-5">
+                                <h2 class="text-xl font-display font-bold text-dark leading-tight group-hover:text-emerald-500 transition-colors">
+                                    {w.wat}
+                                </h2>
+                                
+                                <div class="grid grid-cols-2 gap-4 pt-4 border-t border-warm-grey text-sm">
+                                    {w.waar && (
+                                        <div class="space-y-1 col-span-2">
+                                            <span class="text-xs font-bold text-muted uppercase tracking-wider">Locatie / URL</span>
+                                            <p class="font-medium text-dark">{w.waar}</p>
+                                        </div>
+                                    )}
+                                    {w.contactPersoon && (
+                                        <div class="space-y-1 col-span-2">
+                                            <span class="text-xs font-bold text-muted uppercase tracking-wider">Contact</span>
+                                            <p class="font-medium text-dark">{w.contactPersoon} {w.contactGegevens ? `(${w.contactGegevens})` : ''}</p>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {w.details && (
+                                    <div class="space-y-2">
+                                        <span class="text-xs font-bold text-muted uppercase tracking-wider">Instructies / Details</span>
+                                        <div class="bg-cream-dark rounded-xl p-4 text-sm text-text-secondary leading-relaxed">
+                                            {w.details}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+
+                            <div class="bg-cream/50 p-4 border-t border-warm-grey flex items-center justify-between gap-4 mt-auto backdrop-blur-md">
+                                <div>
+                                    {w.fotos && (
+                                        <a href={String(w.fotos).startsWith('http') ? String(w.fotos) : `https://${w.fotos}`} target="_blank" class="text-sm font-semibold text-emerald-500 hover:text-emerald-600 flex items-center gap-1.5 transition-colors">
+                                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4">
+                                                <path stroke-linecap="round" stroke-linejoin="round" d="m18.375 12.739-7.693 7.693a4.5 4.5 0 0 1-6.364-6.364l10.94-10.94A3 3 0 1 1 19.5 7.372L8.552 18.32m.009-.01-.01.01m5.699-9.941-7.81 7.81a1.5 1.5 0 0 0 2.112 2.13" />
+                                            </svg>
+                                            Beeldmateriaal
+                                        </a>
+                                    )}
+                                </div>
+                                <button
+                                    class="copy-btn magnetic-btn bg-white border border-warm-grey hover:border-emerald-500 px-4 py-2 rounded-lg text-sm font-bold text-dark hover:bg-emerald-500 hover:text-white transition-all shadow-sm flex items-center gap-2"
+                                    data-type="wijziging"
+                                    data-wat={w.wat}
+                                    data-details={w.details}
+                                    data-waar={w.waar}
+                                >
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4">
+                                        <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 17.25v3.375c0 .621-.504 1.125-1.125 1.125h-9.75a1.125 1.125 0 0 1-1.125-1.125V7.875c0-.621.504-1.125 1.125-1.125H6.75a9.06 9.06 0 0 1 1.5.124m7.5 10.376h3.375c.621 0 1.125-.504 1.125-1.125V11.25c0-4.46-3.243-8.161-7.5-8.876a9.06 9.06 0 0 0-1.5-.124H9.375c-.621 0-1.125.504-1.125 1.125v3.5m7.5 10.375H9.375a1.125 1.125 0 0 1-1.125-1.125v-9.25m12 6.625v-1.875a3.375 3.375 0 0 0-3.375-3.375h-1.5a1.125 1.125 0 0 1-1.125-1.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H9.75" />
+                                    </svg>
+                                    Kopieer
+                                </button>
+                            </div>
+                        </div>
+                    ))}
+                </div>
+            )}
+        </div>
+
+        <!-- SETTINGS PANE -->
+        <div id="pane-settings" class="pane hidden space-y-8">
+            <div class="bg-white/50 backdrop-blur-md rounded-3xl shadow-xl border border-warm-grey overflow-hidden p-8 md:p-12 max-w-3xl mx-auto">
+                <div class="text-center mb-10">
+                    <h2 class="text-3xl font-display font-bold text-dark mb-2">Instellingen</h2>
+                    <p class="text-text-secondary">Pas hier de naam, branding en teamleden van jouw Content Portal aan.</p>
+                </div>
+
+                <form id="settingsForm" class="space-y-8" action="/api/save-settings" method="POST" enctype="multipart/form-data">
+                    <div id="settingsFeedback" class="hidden p-4 rounded-xl text-center font-semibold transition-all"></div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div class="space-y-2">
+                            <label class="block font-heading font-semibold text-gray-900 text-lg">Applicatie Naam</label>
+                            <input type="text" name="siteTitle" value={siteTitle} class="w-full px-5 py-4 rounded-xl bg-gray-50 border-2 border-transparent focus:bg-white focus:border-brand/50 focus:ring-4 focus:ring-brand/10 outline-none transition-all font-medium" />
+                        </div>
+                        
+                        <div class="space-y-2">
+                            <label class="block font-heading font-semibold text-gray-900 text-lg">Primaire Kleur</label>
+                            <div class="flex items-center gap-4">
+                                <input type="color" name="primaryColor" value={primaryColor} class="w-14 h-14 rounded-xl cursor-pointer bg-white border border-gray-200 p-1" />
+                                <span class="text-text-secondary font-mono text-sm">{primaryColor}</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="block font-heading font-semibold text-gray-900 text-lg">Klant Logo (optioneel)</label>
+                        <p class="text-sm text-text-secondary">Wordt in de header en als favicon gebruikt.</p>
+                        <input type="hidden" name="currentLogoUrl" value={String(settings.logo_url || '')} />
+                        
+                        <div class="flex items-center gap-6 mt-2">
+                            {settings.logo_url && (
+                                <img src={String(settings.logo_url)} class="w-16 h-16 rounded-lg object-contain bg-white border border-gray-100 p-2 shadow-sm shrink-0" alt="Current logo" />
+                            )}
+                            <input type="file" name="logoFile" accept="image/*" class="w-full text-sm text-gray-500 file:mr-4 file:py-3 file:px-5 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-brand/10 file:text-brand hover:file:bg-brand/20 transition-all cursor-pointer" />
+                        </div>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="block font-heading font-semibold text-gray-900 text-lg">Teamleden</label>
+                        <p class="text-sm text-text-secondary">Plaats elk teamlid op een nieuwe regel (via Enter). Deze zijn kiesbaar in de formulieren.</p>
+                        <textarea name="teamMembers" rows="5" class="w-full px-5 py-4 rounded-xl bg-gray-50 border-2 border-transparent focus:bg-white focus:border-brand/50 focus:ring-4 focus:ring-brand/10 outline-none transition-all font-medium whitespace-pre-line resize-none" placeholder="Ruben&#10;Arieke&#10;Jorian...">{parsedTeamMembers.join('\n')}</textarea>
+                    </div>
+
+                    <div class="space-y-4 pt-4 border-t border-warm-grey">
+                        <label class="block font-heading font-semibold text-gray-900 text-lg">Actieve Formulieren</label>
+                        <p class="text-sm text-text-secondary">Vink uit welke modules je niet wenst te gebruiken richting jouw klanten.</p>
+                        <div class="flex flex-col gap-3">
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <input type="checkbox" name="moduleSocial" checked={moduleSocial === 1} class="w-5 h-5 rounded border-gray-300 text-brand focus:ring-brand/30 transition-all cursor-pointer" />
+                                <span class="text-dark font-medium group-hover:text-brand transition-colors">Social Media Update Aanleveren</span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <input type="checkbox" name="moduleNieuws" checked={moduleNieuws === 1} class="w-5 h-5 rounded border-gray-300 text-brand focus:ring-brand/30 transition-all cursor-pointer" />
+                                <span class="text-dark font-medium group-hover:text-brand transition-colors">Nieuwsartikel Aanleveren</span>
+                            </label>
+                            <label class="flex items-center gap-3 cursor-pointer group">
+                                <input type="checkbox" name="moduleWijzigingen" checked={moduleWijzigingen === 1} class="w-5 h-5 rounded border-gray-300 text-brand focus:ring-brand/30 transition-all cursor-pointer" />
+                                <span class="text-dark font-medium group-hover:text-brand transition-colors">Website Wijzigingen Doorvoeren</span>
+                            </label>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 mt-8 border-t border-warm-grey">
+                        <button type="submit" id="saveSettingsBtn" class="magnetic-btn w-full bg-gray-900 hover:bg-black text-white font-bold text-lg py-5 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2">
+                            Instellingen Opslaan
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</Layout>
+
+<script>
+    // Tabs logic
+    const tabs = ['social', 'nieuws', 'wijziging', 'settings'];
+    const switchTab = (activeTab: string) => {
+        tabs.forEach(tab => {
+            const btn = document.getElementById(`tab-${tab}`);
+            const pane = document.getElementById(`pane-${tab}`);
+            if (tab === activeTab) {
+                btn?.classList.add('bg-brand/10', 'text-brand', 'shadow-sm');
+                btn?.classList.remove('text-text-secondary', 'hover:bg-cream-dark');
+                pane?.classList.replace('hidden', 'block');
+            } else {
+                btn?.classList.remove('bg-brand/10', 'text-brand', 'shadow-sm');
+                btn?.classList.add('text-text-secondary', 'hover:bg-cream-dark');
+                pane?.classList.replace('block', 'hidden');
+            }
+        });
+    };
+    tabs.forEach(tab => {
+        document.getElementById(`tab-${tab}`)?.addEventListener('click', () => switchTab(tab));
+    });
+
+    // Copy logic
+    document.querySelectorAll('.copy-btn').forEach(btn => {
+        btn.addEventListener('click', async (e) => {
+            const target = e.currentTarget as HTMLButtonElement;
+            const ds = target.dataset;
+            let text = '';
+
+            if (ds.type === 'social') {
+                text = `## Social Update: ${ds.wat}
+${ds.waar ? `Locatie: ${ds.waar}` : ''}
+${ds.waarom ? `Doel: ${ds.waarom}` : ''}
+${ds.partners ? `Partners: ${ds.partners}` : ''}
+
+${ds.toelichting || ''}`.trim();
+            } else if (ds.type === 'nieuws') {
+                text = `## ${ds.titel}
+${ds.doelgroep ? `Doelgroep: ${ds.doelgroep}` : ''}
+${ds.wanneer ? `Publiceren: ${ds.wanneer}` : ''}
+${ds.betrokkenen ? `Betrokkenen: ${ds.betrokkenen}` : ''}
+
+${ds.inhoud || ''}`.trim();
+            } else if (ds.type === 'wijziging') {
+                text = `## Website Wijziging: ${ds.wat}
+${ds.waar ? `Locatie / URL: ${ds.waar}` : ''}
+
+**Details & Instructies:**
+${ds.details || ''}`.trim();
+            }
+
+            try {
+                await navigator.clipboard.writeText(text);
+                const orig = target.innerHTML;
+                target.innerHTML = `<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4"><path stroke-linecap="round" stroke-linejoin="round" d="m4.5 12.75 6 6 9-13.5" /></svg> Gekopieerd!`;
+                target.classList.add('bg-dark', 'text-white');
+                setTimeout(() => {
+                    target.innerHTML = orig;
+                    target.classList.remove('bg-dark', 'text-white');
+                }, 2000);
+            } catch (err) {
+                alert('Kopiëren mislukt.');
+            }
+        });
+    });
+
+    // Settings logic
+    const settingsForm = document.getElementById('settingsForm') as HTMLFormElement;
+    settingsForm?.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const btn = document.getElementById('saveSettingsBtn') as HTMLButtonElement;
+        const feedback = document.getElementById('settingsFeedback');
+        
+        btn.disabled = true;
+        btn.classList.add('opacity-75', 'cursor-not-allowed');
+        btn.innerText = 'Opslaan...';
+        
+        const fd = new FormData(settingsForm);
+        // Transform multiline text into JSON array
+        const textMembers = fd.get('teamMembers')?.toString() || '';
+        const membersList = textMembers.split('\n').map(l => l.trim()).filter(Boolean);
+        fd.set('teamMembers', JSON.stringify(membersList));
+
+        try {
+            const res = await fetch('/api/save-settings', { method: 'POST', body: fd });
+            const data = await res.json();
+            if (data.success) {
+                if (feedback) {
+                    feedback.innerText = 'Instellingen succesvol opgeslagen! Herlaad de pagina...';
+                    feedback.className = 'p-4 rounded-xl text-center font-semibold mb-4 bg-green-100 text-green-800 transition-all block';
+                }
+                setTimeout(() => window.location.reload(), 1500);
+            } else {
+                throw new Error(data.error);
+            }
+        } catch (e: any) {
+            if (feedback) {
+                feedback.innerText = e.message || 'Er is een fout opgetreden.';
+                feedback.className = 'p-4 rounded-xl text-center font-semibold mb-4 bg-red-100 text-red-800 transition-all block';
+            }
+            btn.disabled = false;
+            btn.classList.remove('opacity-75', 'cursor-not-allowed');
+            btn.innerText = 'Instellingen Opslaan';
+        }
+    });
+</script>

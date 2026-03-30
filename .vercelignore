@@ -1,0 +1,7 @@
+# Ignore node modules from source code
+node_modules/
+.git/
+
+# FORCE include the dist folder so Vercel doesn't strip the Serverless Function entrypoints
+!dist/
+!.vercel/

@@ -1,0 +1,40 @@
+# build output
+# dist/ (Removed to fix Vercel Node File Trace)
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# generated types
+.astro/
+
+# dependencies
+node_modules/
+
+# Database
+projects.db
+projects.db-wal
+projects.db-shm/
+
+# logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+
+# environment variables
+.env
+.env.production
+
+# macOS-specific files
+.DS_Store
+
+# jetbrains setting folder
+.idea/
+.vercel
+.env*.local
