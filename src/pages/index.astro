@@ -20,16 +20,16 @@ try {
 <Layout title="Content Portal - Aanlever Tool">
     <div class="space-y-12 max-w-5xl mx-auto pb-10 reveal">
         <div class="text-center space-y-6">
-            <h1 class="font-display font-bold text-4xl sm:text-6xl md:text-[4rem] leading-[1.1] md:leading-[1] tracking-tight text-white drop-shadow-lg">
-                Interne <span class="bg-gradient-to-r from-brand to-indigo-400 bg-clip-text text-transparent">Aanlever Tool</span>
+            <h1 class="font-display font-bold text-4xl sm:text-6xl md:text-[4rem] leading-[1.1] md:leading-[1] tracking-tight text-slate-900 drop-shadow-sm">
+                Interne <span class="bg-gradient-to-r from-brand to-indigo-500 bg-clip-text text-transparent">Aanlever Tool</span>
             </h1>
-            <p class="mt-8 text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed font-light">
+            <p class="mt-8 text-lg md:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed font-light">
                 Welkom bij de centrale portal voor het aanleveren van content en nieuws. 
                 Gebruik de onderstaande formulieren om direct informatie door te geven aan ons communicatieteam.
             </p>
             {isAuthenticated && (
                 <div class="pt-2">
-                    <a href="/dashboard" class="inline-flex items-center gap-2 px-8 py-3.5 bg-gray-900 hover:bg-black text-white font-bold rounded-xl shadow-lg ring-1 ring-white/10 hover:shadow-xl hover:-translate-y-1 transition-all">
+                    <a href="/dashboard" class="inline-flex items-center gap-2 px-8 py-3.5 bg-brand hover:bg-brand/90 text-white font-bold rounded-xl shadow-lg hover:shadow-xl hover:-translate-y-1 transition-all">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6A2.25 2.25 0 0 1 6 3.75h2.25A2.25 2.25 0 0 1 10.5 6v2.25a2.25 2.25 0 0 1-2.25 2.25H6a2.25 2.25 0 0 1-2.25-2.25V6ZM3.75 15.75A2.25 2.25 0 0 1 6 13.5h2.25a2.25 2.25 0 0 1 2.25 2.25V18a2.25 2.25 0 0 1-2.25 2.25H6A2.25 2.25 0 0 1 3.75 18v-2.25ZM13.5 6a2.25 2.25 0 0 1 2.25-2.25H18A2.25 2.25 0 0 1 20.25 6v2.25A2.25 2.25 0 0 1 18 10.5h-2.25a2.25 2.25 0 0 1-2.25-2.25V6ZM13.5 15.75a2.25 2.25 0 0 1 2.25-2.25H18a2.25 2.25 0 0 1 2.25 2.25V18A2.25 2.25 0 0 1 18 20.25h-2.25A2.25 2.25 0 0 1 13.5 18v-2.25Z" />
                         </svg>
@@ -43,20 +43,20 @@ try {
             
             <!-- Social Content Card -->
             {moduleSocial === 1 && (
-                <a href="/social" class="group glass-panel p-8 sm:p-10 rounded-3xl md:rounded-[2.5rem] relative overflow-hidden flex flex-col items-center text-center transform hover:-translate-y-2 transition-all duration-300">
+                <a href="/social" class="group bg-white border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-xl p-8 sm:p-10 rounded-3xl md:rounded-[2.5rem] relative overflow-hidden flex flex-col items-center text-center transform hover:-translate-y-2 transition-all duration-300">
                     <div class="absolute inset-0 bg-brand/0 group-hover:bg-brand/5 transition-colors duration-500 rounded-[2.5rem]"></div>
-                    <div class="w-16 h-16 rounded-full bg-white/5 text-brand flex items-center justify-center mb-6 group-hover:bg-brand group-hover:text-white transition-colors duration-300 border border-white/10 group-hover:shadow-[0_0_20px_rgba(var(--color-brand),0.5)]">
+                    <div class="w-16 h-16 rounded-full bg-brand/10 text-brand flex items-center justify-center mb-6 group-hover:bg-brand group-hover:text-white transition-colors duration-300 border border-brand/20 group-hover:shadow-[0_0_20px_rgba(var(--color-brand),0.3)]">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-8">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
                         </svg>
                     </div>
 
-                    <h2 class="text-2xl font-display font-bold text-white mb-3 group-hover:text-brand transition-colors drop-shadow-sm">Social Content</h2>
-                    <p class="text-slate-400 font-light max-w-sm mb-8 flex-grow">
+                    <h2 class="text-2xl font-display font-bold text-slate-900 mb-3 group-hover:text-brand transition-colors">Social Content</h2>
+                    <p class="text-slate-500 font-light max-w-sm mb-8 flex-grow">
                         Deel een snelle update, een kleine mijlpaal, of een leuk bericht om op de socials te plaatsen.
                     </p>
 
-                    <div class="magnetic-btn w-full bg-white/5 border border-white/10 text-white group-hover:border-brand/50 group-hover:bg-brand/10 group-hover:text-brand font-semibold py-4 rounded-xl transition-all flex items-center justify-center gap-2">
+                    <div class="magnetic-btn w-full bg-slate-50 border border-slate-200 text-slate-700 group-hover:border-brand/50 group-hover:bg-brand group-hover:text-white font-semibold py-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm">
                         Naar formulier
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
@@ -67,20 +67,20 @@ try {
 
             <!-- Nieuwsartikel Card -->
             {moduleNieuws === 1 && (
-                <a href="/nieuws" class="group glass-panel p-8 sm:p-10 rounded-3xl md:rounded-[2.5rem] relative overflow-hidden flex flex-col items-center text-center transform hover:-translate-y-2 transition-all duration-300">
+                <a href="/nieuws" class="group bg-white border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-xl p-8 sm:p-10 rounded-3xl md:rounded-[2.5rem] relative overflow-hidden flex flex-col items-center text-center transform hover:-translate-y-2 transition-all duration-300">
                     <div class="absolute inset-0 bg-violet-500/0 group-hover:bg-violet-500/5 transition-colors duration-500 rounded-[2.5rem]"></div>
-                    <div class="w-16 h-16 rounded-full bg-white/5 text-violet-400 flex items-center justify-center mb-6 group-hover:bg-violet-500 group-hover:text-white transition-colors duration-300 border border-white/10 group-hover:shadow-[0_0_20px_rgba(139,92,246,0.5)]">
+                    <div class="w-16 h-16 rounded-full bg-violet-100 text-violet-600 flex items-center justify-center mb-6 group-hover:bg-violet-600 group-hover:text-white transition-colors duration-300 border border-violet-200 group-hover:shadow-[0_0_20px_rgba(139,92,246,0.3)]">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-8">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z" />
                         </svg>
                     </div>
 
-                    <h2 class="text-2xl font-display font-bold text-white mb-3 group-hover:text-violet-400 transition-colors drop-shadow-sm">Nieuwsartikel</h2>
-                    <p class="text-slate-400 font-light max-w-sm mb-8 flex-grow">
+                    <h2 class="text-2xl font-display font-bold text-slate-900 mb-3 group-hover:text-violet-600 transition-colors">Nieuwsartikel</h2>
+                    <p class="text-slate-500 font-light max-w-sm mb-8 flex-grow">
                         Meld een uitgebreid nieuwsartikel aan voor op de website of in de nieuwsbrief.
                     </p>
 
-                    <div class="magnetic-btn w-full bg-white/5 border border-white/10 text-white group-hover:border-violet-500/50 group-hover:bg-violet-500/10 group-hover:text-violet-400 font-semibold py-4 rounded-xl transition-all flex items-center justify-center gap-2">
+                    <div class="magnetic-btn w-full bg-slate-50 border border-slate-200 text-slate-700 group-hover:border-violet-500/50 group-hover:bg-violet-600 group-hover:text-white font-semibold py-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm">
                         Naar formulier
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />
@@ -91,20 +91,20 @@ try {
 
             <!-- Wijziging Card -->
             {moduleWijzigingen === 1 && (
-                <a href="/wijziging" class={`group glass-panel ${moduleSocial + moduleNieuws + moduleWijzigingen === 3 ? 'md:col-span-2 max-w-2xl mx-auto w-full' : ''} p-8 sm:p-10 rounded-3xl md:rounded-[2.5rem] relative overflow-hidden flex flex-col items-center text-center transform hover:-translate-y-2 transition-all duration-300`}>
+                <a href="/wijziging" class={`group bg-white border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-xl ${moduleSocial + moduleNieuws + moduleWijzigingen === 3 ? 'md:col-span-2 max-w-2xl mx-auto w-full' : ''} p-8 sm:p-10 rounded-3xl md:rounded-[2.5rem] relative overflow-hidden flex flex-col items-center text-center transform hover:-translate-y-2 transition-all duration-300`}>
                     <div class="absolute inset-0 bg-emerald-500/0 group-hover:bg-emerald-500/5 transition-colors duration-500 rounded-[2.5rem]"></div>
-                    <div class="w-16 h-16 rounded-full bg-white/5 text-emerald-400 flex items-center justify-center mb-6 group-hover:bg-emerald-500 group-hover:text-white transition-colors duration-300 border border-white/10 group-hover:shadow-[0_0_20px_rgba(16,185,129,0.5)]">
+                    <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mb-6 group-hover:bg-emerald-600 group-hover:text-white transition-colors duration-300 border border-emerald-200 group-hover:shadow-[0_0_20px_rgba(16,185,129,0.3)]">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-8">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
                         </svg>
                     </div>
 
-                    <h2 class="text-2xl font-display font-bold text-white mb-3 group-hover:text-emerald-400 transition-colors drop-shadow-sm">Website Wijziging</h2>
-                    <p class="text-slate-400 font-light max-w-sm mb-8 flex-grow">
+                    <h2 class="text-2xl font-display font-bold text-slate-900 mb-3 group-hover:text-emerald-600 transition-colors">Website Wijziging</h2>
+                    <p class="text-slate-500 font-light max-w-sm mb-8 flex-grow">
                         Geef een wijziging voor de website door, zoals een nieuwe partner, aangepaste tekst of een nieuwe afbeelding.
                     </p>
 
-                    <div class="magnetic-btn w-full max-w-sm bg-white/5 border border-white/10 text-white group-hover:border-emerald-500/50 group-hover:bg-emerald-500/10 group-hover:text-emerald-400 font-semibold py-4 rounded-xl transition-all flex items-center justify-center gap-2">
+                    <div class="magnetic-btn w-full max-w-sm bg-slate-50 border border-slate-200 text-slate-700 group-hover:border-emerald-500/50 group-hover:bg-emerald-600 group-hover:text-white font-semibold py-4 rounded-xl transition-all flex items-center justify-center gap-2 shadow-sm">
                         Naar formulier
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-5">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25 21 12m0 0-3.75 3.75M21 12H3" />

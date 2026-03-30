@@ -53,39 +53,39 @@ if (title === siteTitle || title === "Home") pageTitle = siteTitle;
             }
         </style>
 	</head>
-	<body class="bg-[#050505] text-slate-100 font-sans antialiased min-h-screen flex flex-col selection:bg-brand selection:text-white overflow-x-hidden">
+	<body class="bg-slate-50 text-slate-900 font-sans antialiased min-h-screen flex flex-col selection:bg-brand selection:text-white overflow-x-hidden">
         
-        <!-- Dynamic Glowing Aurora Background -->
-        <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none bg-[#050505]">
-            <div class="absolute top-[-20%] left-[-10%] w-[70vw] h-[70vw] rounded-full bg-brand/20 blur-[120px] mix-blend-screen animate-aurora origin-center opacity-60"></div>
-            <div class="absolute bottom-[-20%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-indigo-600/20 blur-[120px] mix-blend-screen animate-aurora origin-[50%_100%] opacity-50 animation-delay-2000"></div>
-            <div class="absolute top-[20%] right-[10%] w-[40vw] h-[40vw] rounded-full bg-violet-600/15 blur-[100px] mix-blend-screen animate-pulse-slow opacity-40"></div>
+        <!-- Dynamic Glowing Aurora Background for Light Theme -->
+        <div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none bg-slate-50">
+            <div class="absolute top-[-20%] left-[-10%] w-[70vw] h-[70vw] rounded-full bg-brand/10 blur-[120px] mix-blend-multiply animate-aurora origin-center opacity-60"></div>
+            <div class="absolute bottom-[-20%] right-[-10%] w-[60vw] h-[60vw] rounded-full bg-indigo-600/10 blur-[120px] mix-blend-multiply animate-aurora origin-[50%_100%] opacity-50 animation-delay-2000"></div>
+            <div class="absolute top-[20%] right-[10%] w-[40vw] h-[40vw] rounded-full bg-violet-600/10 blur-[100px] mix-blend-multiply animate-pulse-slow opacity-40"></div>
             
             <!-- Grid overlay for texture -->
-            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PHBhdGggZD0iTTAgMGg0MHY0MEgweiIgZmlsbD0ibm9uZSIvPPHBhdGggZD0iTTAgMGg0MHYxSDB6bTAgNDBoMXYtNDBoLTEiIGZpbGw9InJnYmEoMjU1LDI1NSwyNTUsMC4wMykiLz48L3N2Zz4=')] opacity-30"></div>
+            <div class="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSI0MCIgaGVpZ2h0PSI0MCI+PHBhdGggZD0iTTAgMGg0MHY0MEgweiIgZmlsbD0ibm9uZSIvPPHBhdGggZD0iTTAgMGg0MHYxHDB6bTAgNDBoMXYtNDBoLTEiIGZpbGw9InJnYmEoMCwwLDAsMC4wMykiLz48L3N2Zz4=')] opacity-50"></div>
         </div>
 
-        <header class="sticky top-0 z-40 bg-[#050505]/70 backdrop-blur-2xl border-b border-white/5 transition-all duration-300" id="main-header">
+        <header class="sticky top-0 z-40 bg-white/70 backdrop-blur-2xl border-b border-slate-200 transition-all duration-300" id="main-header">
             <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
                 
                 <a href="/" class="flex items-center gap-3 group">
-                    <div class="relative w-10 h-10 flex-shrink-0 bg-white shadow-lg shadow-white/5 rounded-xl overflow-hidden flex justify-center items-center border border-white/10 group-hover:scale-105 transition-transform">
+                    <div class="relative w-10 h-10 flex-shrink-0 bg-white shadow-sm rounded-xl overflow-hidden flex justify-center items-center border border-slate-100 group-hover:scale-105 transition-transform">
                         <img src={logoUrl || "/favicon.svg"} alt="Logo" class="max-w-full max-h-full object-contain p-2" />
                     </div>
                     <div>
-                        <span class="font-display font-bold text-xl text-white tracking-tight">{siteTitle}</span>
+                        <span class="font-display font-bold text-xl text-slate-900 tracking-tight">{siteTitle}</span>
                         <div class="h-0.5 w-0 bg-brand group-hover:w-full transition-all duration-300 ease-out"></div>
                     </div>
                 </a>
                 
                 {isAuthenticated ? (
                     <div class="flex items-center gap-4">
-                        <a href="/dashboard" class="hidden sm:flex items-center gap-2 text-sm font-semibold text-slate-300 hover:text-white transition-colors">
+                        <a href="/dashboard" class="hidden sm:flex items-center gap-2 text-sm font-semibold text-slate-600 hover:text-slate-900 transition-colors">
                             <span class="w-2 h-2 rounded-full bg-brand animate-pulse"></span>
                             Dashboard
                         </a>
                         <form action="/api/logout" method="POST">
-                            <button type="submit" class="p-2 text-slate-400 hover:text-brand bg-white/5 hover:bg-brand/10 border border-white/5 rounded-xl transition-all" aria-label="Uitloggen" title="Uitloggen">
+                            <button type="submit" class="p-2 text-slate-500 hover:text-brand bg-slate-50 hover:bg-brand/10 border border-slate-200 rounded-xl transition-all" aria-label="Uitloggen" title="Uitloggen">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-5">
                                   <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 9V5.25A2.25 2.25 0 0 0 13.5 3h-6a2.25 2.25 0 0 0-2.25 2.25v13.5A2.25 2.25 0 0 0 7.5 21h6a2.25 2.25 0 0 0 2.25-2.25V15m3 0 3-3m0 0-3-3m3 3H9" />
                                 </svg>
@@ -93,7 +93,7 @@ if (title === siteTitle || title === "Home") pageTitle = siteTitle;
                         </form>
                     </div>
                 ) : (
-                    <a href="/login" class="flex items-center gap-2 px-4 py-2.5 bg-white/5 text-white text-sm font-semibold rounded-xl hover:bg-white/10 border border-white/10 transition-all duration-200">
+                    <a href="/login" class="flex items-center gap-2 px-4 py-2.5 bg-slate-50 text-slate-700 text-sm font-semibold rounded-xl hover:bg-slate-100 border border-slate-200 transition-all duration-200">
                         Inloggen
                     </a>
                 )}
@@ -104,9 +104,9 @@ if (title === siteTitle || title === "Home") pageTitle = siteTitle;
             <slot />
         </main>
         
-        <footer class="bg-dark text-white py-8 text-center text-sm mt-auto">
+        <footer class="bg-white border-t border-slate-200 text-slate-500 py-8 text-center text-sm mt-auto">
             <div class="max-w-7xl mx-auto px-4">
-                <p class="opacity-50">&copy; {new Date().getFullYear()} Content Portal</p>
+                <p>&copy; {new Date().getFullYear()} Content Portal</p>
             </div>
         </footer>
 	</body>

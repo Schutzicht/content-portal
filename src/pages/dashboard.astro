@@ -45,11 +45,11 @@ try { parsedTeamMembers = JSON.parse(teamMembers); } catch(e) {}
         <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
             <div>
                 <h1 class="text-3xl md:text-4xl font-display font-bold text-dark">
-                    Centraal <span class="bg-gradient-to-r from-indigo to-violet bg-clip-text text-transparent">Dashboard</span>
+                    Centraal <span class="bg-gradient-to-r from-indigo-500 to-violet-500 bg-clip-text text-transparent">Dashboard</span>
                 </h1>
                 <p class="text-text-secondary mt-2">Overzicht van alle binnengekomen aanmeldingen.</p>
             </div>
-            <a href="/" class="bg-white border border-warm-grey hover:border-brand px-5 py-2.5 rounded-xl font-semibold text-dark hover:text-brand transition-colors inline-flex items-center gap-2 shadow-sm">
+            <a href="/" class="bg-brand border border-brand/90 hover:bg-brand/90 px-5 py-2.5 rounded-xl font-semibold text-white transition-colors inline-flex items-center gap-2 shadow-sm">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-5">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
                 </svg>
@@ -72,28 +72,28 @@ try { parsedTeamMembers = JSON.parse(teamMembers); } catch(e) {}
         )}
 
         <!-- Tabs -->
-        <div class="bg-white/5 border border-white/10 p-2 rounded-2xl flex flex-col sm:flex-row shadow-2xl backdrop-blur-xl">
+        <div class="bg-white border border-slate-100 p-2 rounded-2xl flex flex-col sm:flex-row shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
             <div class="flex flex-row overflow-x-auto sm:overflow-visible w-full sm:w-auto gap-2 p-1" style="scrollbar-width: none;">
-                <button id="tab-social" class="tab-btn active w-full sm:w-auto px-5 py-2.5 rounded-xl text-sm font-bold text-slate-400 hover:text-white hover:bg-white/5 transition-all flex items-center justify-center gap-2 flex-1 sm:flex-none">
+                <button id="tab-social" class="tab-btn active w-full sm:w-auto px-5 py-2.5 rounded-xl text-sm font-bold text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-all flex items-center justify-center gap-2 flex-1 sm:flex-none">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
                     </svg>
                     Social Content ({socialSubs.length})
                 </button>
-                <button id="tab-nieuws" class="tab-btn px-5 py-2.5 rounded-xl text-sm font-bold text-slate-400 hover:text-white hover:bg-white/5 transition-all flex items-center justify-center gap-2 flex-1 sm:flex-none">
+                <button id="tab-nieuws" class="tab-btn px-5 py-2.5 rounded-xl text-sm font-bold text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-all flex items-center justify-center gap-2 flex-1 sm:flex-none">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4">
                       <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z" />
                     </svg>
                     Nieuwsartikelen ({nieuwsSubs.length})
                 </button>
-                <button id="tab-wijziging" class="tab-btn px-5 py-2.5 rounded-xl text-sm font-bold text-slate-400 hover:text-white hover:bg-white/5 transition-all flex items-center justify-center gap-2 flex-1 sm:flex-none">
+                <button id="tab-wijziging" class="tab-btn px-5 py-2.5 rounded-xl text-sm font-bold text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-all flex items-center justify-center gap-2 flex-1 sm:flex-none">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
                     </svg>
                     Wijzigingen ({wijzSubs.length})
                 </button>
             </div>
-            <button id="tab-settings" class="tab-btn mt-2 sm:mt-0 sm:ml-auto px-5 py-2.5 rounded-xl text-sm font-bold text-slate-400 hover:text-white hover:bg-white/5 transition-all flex items-center gap-2 w-full sm:w-auto justify-center">
+            <button id="tab-settings" class="tab-btn mt-2 sm:mt-0 sm:ml-auto px-5 py-2.5 rounded-xl text-sm font-bold text-slate-500 hover:text-slate-900 hover:bg-slate-50 transition-all flex items-center gap-2 w-full sm:w-auto justify-center">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4">
                   <path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.325.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 0 1 1.37.49l1.296 2.247a1.125 1.125 0 0 1-.26 1.431l-1.003.827c-.293.241-.438.613-.43.992a7.723 7.723 0 0 1 0 .255c-.008.378.137.75.43.99l1.005.828c.424.35.534.955.26 1.43l-1.298 2.247a1.125 1.125 0 0 1-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.47 6.47 0 0 1-.22.128c-.331.183-.581.495-.644.869l-.213 1.281c-.09.543-.56.94-1.11.94h-2.594c-.55 0-1.019-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 0 1-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 0 1-1.369-.49l-1.297-2.247a1.125 1.125 0 0 1 .26-1.431l1.004-.827c.292-.24.437-.613.43-.991a6.932 6.932 0 0 1 0-.255c.007-.38-.138-.751-.43-.992l-1.004-.827a1.125 1.125 0 0 1-.26-1.43l1.297-2.247a1.125 1.125 0 0 1 1.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.086.22-.128.332-.183.582-.495.644-.869l.214-1.28Z" />
                   <path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
@@ -105,23 +105,23 @@ try { parsedTeamMembers = JSON.parse(teamMembers); } catch(e) {}
         <!-- SOCIAL PANE -->
         <div id="pane-social" class="pane block space-y-8">
             {socialSubs.length === 0 ? (
-                <div class="glass-panel p-10 rounded-3xl text-center shadow-xl">
+                <div class="bg-white border border-slate-100 p-10 rounded-3xl text-center shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
                     <div class="w-16 h-16 mx-auto mb-4 bg-brand/10 text-brand rounded-full flex items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M7.5 8.25h9m-9 3H12m-9.75 1.51c0 1.6 1.123 2.994 2.707 3.227 1.129.166 2.27.293 3.423.379.35.026.67.21.865.501L12 21l2.755-4.133a1.14 1.14 0 0 1 .865-.501 48.172 48.172 0 0 0 3.423-.379c1.584-.233 2.707-1.626 2.707-3.228V6.741c0-1.602-1.123-2.995-2.707-3.228A48.394 48.394 0 0 0 12 3c-2.392 0-4.744.175-7.043.513C3.373 3.746 2.25 5.14 2.25 6.741v6.018Z" />
                         </svg>
                     </div>
-                    <h3 class="text-xl font-display font-bold text-white mb-2">Geen social content gevonden</h3>
-                    <p class="text-slate-400">Er zijn nog geen social messages ingediend.</p>
+                    <h3 class="text-xl font-display font-bold text-slate-900 mb-2">Geen social content gevonden</h3>
+                    <p class="text-slate-500">Er zijn nog geen social messages ingediend.</p>
                 </div>
             ) : (
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     {socialSubs.map((c) => (
-                        <div class="glass-panel rounded-3xl overflow-hidden flex flex-col relative group hover:-translate-y-1 transition-transform">
+                        <div class="bg-white border border-slate-100 rounded-3xl overflow-hidden flex flex-col relative group hover:-translate-y-1 transition-transform shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
                             <div class="absolute top-0 left-0 w-full h-1.5 bg-brand"></div>
                             <div class="p-8 flex-grow space-y-5">
                                 <div class="flex items-start justify-between gap-4">
-                                    <h2 class="text-xl font-display font-bold text-white leading-tight group-hover:text-brand transition-colors">
+                                    <h2 class="text-xl font-display font-bold text-slate-900 leading-tight group-hover:text-brand transition-colors">
                                         {c.wat}
                                     </h2>
                                     {c.timing && (
@@ -134,47 +134,47 @@ try { parsedTeamMembers = JSON.parse(teamMembers); } catch(e) {}
                                     )}
                                 </div>
                                 
-                                <div class="grid grid-cols-2 gap-4 pt-4 border-t border-white/5 text-sm">
+                                <div class="grid grid-cols-2 gap-4 pt-4 border-t border-slate-100 text-sm">
                                     {c.waar && (
                                         <div class="space-y-1">
-                                            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Waar</span>
-                                            <p class="font-medium text-slate-200">{c.waar}</p>
+                                            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Waar</span>
+                                            <p class="font-medium text-slate-700">{c.waar}</p>
                                         </div>
                                     )}
                                     {c.waarom && (
                                         <div class="space-y-1">
-                                            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Doel</span>
-                                            <p class="font-medium text-slate-200">{c.waarom}</p>
+                                            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Doel</span>
+                                            <p class="font-medium text-slate-700">{c.waarom}</p>
                                         </div>
                                     )}
                                     {c.partners && (
                                         <div class="space-y-1 col-span-2">
-                                            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Partners</span>
-                                            <p class="font-medium text-slate-200">{c.partners}</p>
+                                            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Partners</span>
+                                            <p class="font-medium text-slate-700">{c.partners}</p>
                                         </div>
                                     )}
                                     {c.contactPersoon && (
                                         <div class="space-y-1 col-span-2">
-                                            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Contact</span>
-                                            <p class="font-medium text-slate-200">{c.contactPersoon} {c.contactGegevens ? `(${c.contactGegevens})` : ''}</p>
+                                            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Contact</span>
+                                            <p class="font-medium text-slate-700">{c.contactPersoon} {c.contactGegevens ? `(${c.contactGegevens})` : ''}</p>
                                         </div>
                                     )}
                                 </div>
 
                                 {c.toelichting && (
                                     <div class="space-y-2">
-                                        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Toelichting</span>
-                                        <div class="bg-white/5 border border-white/5 rounded-xl p-4 text-sm text-slate-300 italic leading-relaxed">
+                                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Toelichting</span>
+                                        <div class="bg-slate-50 border border-slate-100 rounded-xl p-4 text-sm text-slate-600 italic leading-relaxed">
                                             "{c.toelichting}"
                                         </div>
                                     </div>
                                 )}
                             </div>
 
-                            <div class="bg-white/5 p-4 border-t border-white/5 flex items-center justify-between gap-4 mt-auto backdrop-blur-md">
+                            <div class="bg-slate-50 p-4 border-t border-slate-100 flex items-center justify-between gap-4 mt-auto">
                                 <div>
                                     {c.fotos && (
-                                        <a href={String(c.fotos).startsWith('http') ? String(c.fotos) : `https://${c.fotos}`} target="_blank" class="text-sm font-semibold text-brand hover:text-white flex items-center gap-1.5 transition-colors">
+                                        <a href={String(c.fotos).startsWith('http') ? String(c.fotos) : `https://${c.fotos}`} target="_blank" class="text-sm font-semibold text-brand hover:text-indigo transition-colors flex items-center gap-1.5">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="m18.375 12.739-7.693 7.693a4.5 4.5 0 0 1-6.364-6.364l10.94-10.94A3 3 0 1 1 19.5 7.372L8.552 18.32m.009-.01-.01.01m5.699-9.941-7.81 7.81a1.5 1.5 0 0 0 2.112 2.13" />
                                             </svg>
@@ -183,7 +183,7 @@ try { parsedTeamMembers = JSON.parse(teamMembers); } catch(e) {}
                                     )}
                                 </div>
                                 <button
-                                    class="magnetic-btn bg-white/5 border border-white/10 hover:border-brand px-4 py-2 rounded-lg text-sm font-bold text-white hover:bg-brand transition-all shadow-sm flex items-center gap-2"
+                                    class="magnetic-btn bg-white border border-slate-200 hover:border-brand px-4 py-2 rounded-lg text-sm font-bold text-slate-700 hover:text-brand transition-all shadow-sm flex items-center gap-2"
                                     data-type="social"
                                     data-wat={c.wat}
                                     data-waar={c.waar}
@@ -206,56 +206,56 @@ try { parsedTeamMembers = JSON.parse(teamMembers); } catch(e) {}
         <!-- NIEUWS PANE -->
         <div id="pane-nieuws" class="pane hidden space-y-8">
             {nieuwsSubs.length === 0 ? (
-                <div class="glass-panel p-10 rounded-3xl text-center shadow-xl">
-                    <div class="w-16 h-16 mx-auto mb-4 bg-violet-500/10 text-violet-400 rounded-full flex items-center justify-center">
+                <div class="bg-white border border-slate-100 p-10 rounded-3xl text-center shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-violet-100 text-violet-600 rounded-full flex items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z" />
                         </svg>
                     </div>
-                    <h3 class="text-xl font-display font-bold text-white mb-2">Geen nieuwsartikelen gevonden</h3>
-                    <p class="text-slate-400">Er zijn nog geen nieuwsberichten ingediend.</p>
+                    <h3 class="text-xl font-display font-bold text-slate-900 mb-2">Geen nieuwsartikelen gevonden</h3>
+                    <p class="text-slate-500">Er zijn nog geen nieuwsberichten ingediend.</p>
                 </div>
             ) : (
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     {nieuwsSubs.map((n) => (
-                        <div class="glass-panel rounded-3xl overflow-hidden flex flex-col relative group hover:-translate-y-1 transition-transform">
+                        <div class="bg-white border border-slate-100 rounded-3xl overflow-hidden flex flex-col relative group hover:-translate-y-1 transition-transform shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
                             <div class="absolute top-0 left-0 w-full h-1.5 bg-violet-500"></div>
                             <div class="p-8 flex-grow space-y-5">
-                                <h2 class="text-xl font-display font-bold text-white leading-tight group-hover:text-violet-400 transition-colors">
+                                <h2 class="text-xl font-display font-bold text-slate-900 leading-tight group-hover:text-violet-600 transition-colors">
                                     {n.titel}
                                 </h2>
                                 
-                                <div class="grid grid-cols-2 gap-4 pt-4 border-t border-white/5 text-sm">
+                                <div class="grid grid-cols-2 gap-4 pt-4 border-t border-slate-100 text-sm">
                                     <div class="space-y-1">
-                                        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Doelgroep</span>
-                                        <p class="font-medium text-slate-200">{n.doelgroep}</p>
+                                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Doelgroep</span>
+                                        <p class="font-medium text-slate-700">{n.doelgroep}</p>
                                     </div>
                                     <div class="space-y-1">
-                                        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Contact</span>
-                                        <p class="font-medium text-slate-200">{n.contactPersoon}</p>
+                                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Contact</span>
+                                        <p class="font-medium text-slate-700">{n.contactPersoon}</p>
                                     </div>
                                     {n.wanneer && (
                                         <div class="space-y-1 col-span-2">
-                                            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Beoogde datum</span>
-                                            <p class="font-medium text-violet-400">{n.wanneer}</p>
+                                            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Beoogde datum</span>
+                                            <p class="font-medium text-violet-600">{n.wanneer}</p>
                                         </div>
                                     )}
                                 </div>
 
                                 {n.inhoud && (
                                     <div class="space-y-2">
-                                        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Inhoud Artikel</span>
-                                        <div class="bg-white/5 border border-white/5 rounded-xl p-4 text-sm text-slate-300 leading-relaxed font-light">
+                                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Inhoud Artikel</span>
+                                        <div class="bg-slate-50 border border-slate-100 rounded-xl p-4 text-sm text-slate-600 leading-relaxed font-normal">
                                             {n.inhoud}
                                         </div>
                                     </div>
                                 )}
                             </div>
 
-                            <div class="bg-white/5 p-4 border-t border-white/5 flex items-center justify-between gap-4 mt-auto backdrop-blur-md">
+                            <div class="bg-slate-50 p-4 border-t border-slate-100 flex items-center justify-between gap-4 mt-auto">
                                 <div>
                                     {n.fotos && (
-                                        <a href={String(n.fotos).startsWith('http') ? String(n.fotos) : `https://${n.fotos}`} target="_blank" class="text-sm font-semibold text-violet-400 hover:text-white flex items-center gap-1.5 transition-colors">
+                                        <a href={String(n.fotos).startsWith('http') ? String(n.fotos) : `https://${n.fotos}`} target="_blank" class="text-sm font-semibold text-violet-600 hover:text-violet-800 flex items-center gap-1.5 transition-colors">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="m18.375 12.739-7.693 7.693a4.5 4.5 0 0 1-6.364-6.364l10.94-10.94A3 3 0 1 1 19.5 7.372L8.552 18.32m.009-.01-.01.01m5.699-9.941-7.81 7.81a1.5 1.5 0 0 0 2.112 2.13" />
                                             </svg>
@@ -264,7 +264,7 @@ try { parsedTeamMembers = JSON.parse(teamMembers); } catch(e) {}
                                     )}
                                 </div>
                                 <button
-                                    class="copy-btn magnetic-btn bg-white/5 border border-white/10 hover:border-violet-500 px-4 py-2 rounded-lg text-sm font-bold text-white hover:bg-violet-500 transition-all shadow-sm flex items-center gap-2"
+                                    class="copy-btn magnetic-btn bg-white border border-slate-200 hover:border-violet-500 px-4 py-2 rounded-lg text-sm font-bold text-slate-700 hover:text-violet-600 transition-all shadow-sm flex items-center gap-2"
                                     data-type="nieuws"
                                     data-titel={n.titel}
                                     data-inhoud={n.inhoud}
@@ -287,54 +287,54 @@ try { parsedTeamMembers = JSON.parse(teamMembers); } catch(e) {}
         <!-- WIJZIGINGEN PANE -->
         <div id="pane-wijziging" class="pane hidden space-y-8">
             {wijzSubs.length === 0 ? (
-                <div class="glass-panel p-10 rounded-3xl text-center shadow-xl">
-                    <div class="w-16 h-16 mx-auto mb-4 bg-emerald-500/10 text-emerald-400 rounded-full flex items-center justify-center">
+                <div class="bg-white border border-slate-100 p-10 rounded-3xl text-center shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
+                    <div class="w-16 h-16 mx-auto mb-4 bg-emerald-100 text-emerald-600 rounded-full flex items-center justify-center">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-8">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 10.5v6m3-3H9m4.06-7.19-2.12-2.12a1.5 1.5 0 0 0-1.061-.44H4.5A2.25 2.25 0 0 0 2.25 6v12a2.25 2.25 0 0 0 2.25 2.25h15A2.25 2.25 0 0 0 21.75 18V9a2.25 2.25 0 0 0-2.25-2.25h-5.379a1.5 1.5 0 0 1-1.06-.44Z" />
                         </svg>
                     </div>
-                    <h3 class="text-xl font-display font-bold text-white mb-2">Geen wijzigingen gevonden</h3>
-                    <p class="text-slate-400">Er zijn nog geen website wijzigingen ingediend.</p>
+                    <h3 class="text-xl font-display font-bold text-slate-900 mb-2">Geen wijzigingen gevonden</h3>
+                    <p class="text-slate-500">Er zijn nog geen website wijzigingen ingediend.</p>
                 </div>
             ) : (
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
                     {wijzSubs.map((w) => (
-                        <div class="glass-panel rounded-3xl overflow-hidden flex flex-col relative group hover:-translate-y-1 transition-transform">
+                        <div class="bg-white border border-slate-100 rounded-3xl overflow-hidden flex flex-col relative group hover:-translate-y-1 transition-transform shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
                             <div class="absolute top-0 left-0 w-full h-1.5 bg-emerald-500"></div>
                             <div class="p-8 flex-grow space-y-5">
-                                <h2 class="text-xl font-display font-bold text-white leading-tight group-hover:text-emerald-400 transition-colors">
+                                <h2 class="text-xl font-display font-bold text-slate-900 leading-tight group-hover:text-emerald-600 transition-colors">
                                     {w.wat}
                                 </h2>
                                 
-                                <div class="grid grid-cols-2 gap-4 pt-4 border-t border-white/5 text-sm">
+                                <div class="grid grid-cols-2 gap-4 pt-4 border-t border-slate-100 text-sm">
                                     {w.waar && (
                                         <div class="space-y-1 col-span-2">
-                                            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Locatie / URL</span>
-                                            <p class="font-medium text-slate-200">{w.waar}</p>
+                                            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Locatie / URL</span>
+                                            <p class="font-medium text-slate-700">{w.waar}</p>
                                         </div>
                                     )}
                                     {w.contactPersoon && (
                                         <div class="space-y-1 col-span-2">
-                                            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Contact</span>
-                                            <p class="font-medium text-slate-200">{w.contactPersoon} {w.contactGegevens ? `(${w.contactGegevens})` : ''}</p>
+                                            <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Contact</span>
+                                            <p class="font-medium text-slate-700">{w.contactPersoon} {w.contactGegevens ? `(${w.contactGegevens})` : ''}</p>
                                         </div>
                                     )}
                                 </div>
 
                                 {w.details && (
                                     <div class="space-y-2">
-                                        <span class="text-xs font-bold text-slate-500 uppercase tracking-wider">Instructies / Details</span>
-                                        <div class="bg-white/5 border border-white/5 rounded-xl p-4 text-sm text-slate-300 leading-relaxed font-light">
+                                        <span class="text-xs font-bold text-slate-400 uppercase tracking-wider">Instructies / Details</span>
+                                        <div class="bg-slate-50 border border-slate-100 rounded-xl p-4 text-sm text-slate-600 leading-relaxed font-normal">
                                             {w.details}
                                         </div>
                                     </div>
                                 )}
                             </div>
 
-                            <div class="bg-white/5 p-4 border-t border-white/5 flex items-center justify-between gap-4 mt-auto backdrop-blur-md">
+                            <div class="bg-slate-50 p-4 border-t border-slate-100 flex items-center justify-between gap-4 mt-auto">
                                 <div>
                                     {w.fotos && (
-                                        <a href={String(w.fotos).startsWith('http') ? String(w.fotos) : `https://${w.fotos}`} target="_blank" class="text-sm font-semibold text-emerald-400 hover:text-white flex items-center gap-1.5 transition-colors">
+                                        <a href={String(w.fotos).startsWith('http') ? String(w.fotos) : `https://${w.fotos}`} target="_blank" class="text-sm font-semibold text-emerald-600 hover:text-emerald-800 flex items-center gap-1.5 transition-colors">
                                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4">
                                                 <path stroke-linecap="round" stroke-linejoin="round" d="m18.375 12.739-7.693 7.693a4.5 4.5 0 0 1-6.364-6.364l10.94-10.94A3 3 0 1 1 19.5 7.372L8.552 18.32m.009-.01-.01.01m5.699-9.941-7.81 7.81a1.5 1.5 0 0 0 2.112 2.13" />
                                             </svg>
@@ -343,7 +343,7 @@ try { parsedTeamMembers = JSON.parse(teamMembers); } catch(e) {}
                                     )}
                                 </div>
                                 <button
-                                    class="copy-btn magnetic-btn bg-white/5 border border-white/10 hover:border-emerald-500 px-4 py-2 rounded-lg text-sm font-bold text-white hover:bg-emerald-500 transition-all shadow-sm flex items-center gap-2"
+                                    class="copy-btn magnetic-btn bg-white border border-slate-200 hover:border-emerald-500 px-4 py-2 rounded-lg text-sm font-bold text-slate-700 hover:text-emerald-600 transition-all shadow-sm flex items-center gap-2"
                                     data-type="wijziging"
                                     data-wat={w.wat}
                                     data-details={w.details}
@@ -363,10 +363,10 @@ try { parsedTeamMembers = JSON.parse(teamMembers); } catch(e) {}
 
         <!-- SETTINGS PANE -->
         <div id="pane-settings" class="pane hidden space-y-8">
-            <div class="glass-panel rounded-3xl overflow-hidden p-8 md:p-12 max-w-3xl mx-auto">
+            <div class="bg-white border border-slate-100 rounded-3xl overflow-hidden p-8 md:p-12 max-w-3xl mx-auto shadow-[0_8px_30px_rgb(0,0,0,0.04)]">
                 <div class="text-center space-y-6 mb-10">
-                    <h2 class="text-3xl font-display font-bold text-white mb-2">Instellingen</h2>
-                    <p class="text-slate-400">Pas hier de naam, branding en teamleden van jouw Content Portal aan.</p>
+                    <h2 class="text-3xl font-display font-bold text-slate-900 mb-2">Instellingen</h2>
+                    <p class="text-slate-500">Pas hier de naam, branding en teamleden van jouw Content Portal aan.</p>
                 </div>
 
                 <form id="settingsForm" class="space-y-8" action="/api/save-settings" method="POST" enctype="multipart/form-data">
@@ -426,7 +426,7 @@ try { parsedTeamMembers = JSON.parse(teamMembers); } catch(e) {}
                     </div>
 
                     <div class="pt-4 mt-8 border-t border-warm-grey">
-                        <button type="submit" id="saveSettingsBtn" class="magnetic-btn w-full bg-gray-900 hover:bg-black text-white font-bold text-lg py-5 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2">
+                        <button type="submit" id="saveSettingsBtn" class="magnetic-btn w-full bg-brand hover:bg-brand/90 text-white font-bold text-lg py-5 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2">
                             Instellingen Opslaan
                         </button>
                     </div>
@@ -516,7 +516,7 @@ ${ds.details || ''}`.trim();
         const fd = new FormData(settingsForm);
         // Transform multiline text into JSON array
         const textMembers = fd.get('teamMembers')?.toString() || '';
-        const membersList = textMembers.split('\n').map(l => l.trim()).filter(Boolean);
+        const membersList = textMembers.split(/\r?\n/).map(l => l.trim()).filter(Boolean);
         fd.set('teamMembers', JSON.stringify(membersList));
 
         try {
