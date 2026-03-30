@@ -14,7 +14,7 @@ try {
 <Layout title="Nieuwsartikel Aanleveren">
     <div class="space-y-12 max-w-4xl mx-auto pb-20 reveal">
         <div class="max-w-7xl mx-auto pt-4">
-            <a href="/" class="inline-flex items-center gap-2 text-gray-600 hover:text-cyan-600 font-semibold transition-colors">
+            <a href="/" class="inline-flex items-center gap-2 text-slate-400 hover:text-white font-semibold transition-colors">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5 3 12m0 0 7.5-7.5M3 12h18" />
                 </svg>
@@ -22,46 +22,46 @@ try {
             </a>
         </div>
         <div class="text-center space-y-4 -mt-4">
-            <div class="inline-block px-4 py-1.5 rounded-full bg-white border border-gray-200 text-sm font-semibold text-cyan-600 mb-2 shadow-sm">
+            <div class="inline-block px-4 py-1.5 rounded-full bg-violet-500/10 border border-violet-500/20 text-sm font-semibold text-violet-400 mb-2 shadow-sm">
                 Voor intern gebruik
             </div>
-            <h1 class="text-4xl md:text-5xl font-heading font-bold text-gray-900 leading-tight">
-                Lever een <span class="bg-gradient-to-r from-cyan-500 to-blue-500 bg-clip-text text-transparent">Nieuwsartikel</span> aan
+            <h1 class="text-4xl md:text-5xl font-heading font-bold text-white leading-tight">
+                Lever een <span class="bg-gradient-to-r from-violet-500 to-purple-500 bg-clip-text text-transparent">Nieuwsartikel</span> aan
             </h1>
-            <p class="text-gray-600 text-lg max-w-2xl mx-auto leading-relaxed">
+            <p class="text-slate-400 text-lg max-w-2xl mx-auto leading-relaxed">
                 Heb je een interessant artikel of een belangrijk nieuwtje voor op de website? Deel het via dit formulier.
             </p>
         </div>
 
-        <form id="submissionForm" class="max-w-3xl mx-auto bg-white p-8 md:p-12 rounded-3xl shadow-xl shadow-gray-200/50 border border-gray-100 relative overflow-hidden space-y-8">
+        <form id="submissionForm" class="max-w-3xl mx-auto glass-panel p-8 md:p-12 rounded-3xl relative overflow-hidden space-y-8">
             <!-- Top shimmer effect -->
-            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-cyan-500 to-blue-500"></div>
+            <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-violet-500 to-purple-500"></div>
 
             <div id="formFeedback" class="hidden p-4 rounded-xl text-center font-semibold mb-4 transition-all"></div>
 
             <!-- Titel -->
             <div class="space-y-2">
-                <label for="wat" class="block font-heading font-semibold text-gray-900 text-lg">Titel van het artikel <span class="text-cyan-600">*</span></label>
-                <p class="text-sm text-gray-600 mb-2">Een pakkende titel voor het nieuwsartikel.</p>
+                <label for="wat" class="block font-heading font-semibold text-white text-lg">Titel van het artikel <span class="text-violet-500">*</span></label>
+                <p class="text-sm text-slate-400 mb-2">Een pakkende titel voor het nieuwsartikel.</p>
                 <input type="text" id="wat" name="wat" required
-                    class="w-full px-5 py-4 rounded-xl bg-gray-50 border-2 border-transparent focus:bg-white focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10 outline-none transition-all duration-300 font-medium placeholder-gray-400"
+                    class="w-full px-5 py-4 rounded-xl bg-[#0A0A0A] border border-white/10 text-white focus:outline-none focus:border-violet-500/50 focus:ring-4 focus:ring-violet-500/10 transition-all duration-300 font-medium placeholder-slate-600"
                     placeholder="Bijv: Nieuwe samenwerking..." />
             </div>
 
             <!-- Inhoud -->
             <div class="space-y-2">
                 <div class="flex items-center justify-between">
-                    <label for="toelichting" class="block font-heading font-semibold text-gray-900 text-lg">Artikel / Inhoud <span class="text-cyan-600">*</span></label>
-                    <button type="button" id="micButton" class="text-gray-900 hover:text-cyan-600 transition-colors p-2 rounded-full hover:bg-gray-100 hidden group-focus-within:block" title="Spreek tekst in">
+                    <label for="toelichting" class="block font-heading font-semibold text-white text-lg">Artikel / Inhoud <span class="text-violet-500">*</span></label>
+                    <button type="button" id="micButton" class="text-slate-400 hover:text-violet-400 transition-colors p-2 rounded-full hover:bg-white/5 hidden group-focus-within:block" title="Spreek tekst in">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5a6 6 0 0 1-6-6v-1.5m6 7.5v3.75m-3.75 0h7.5M12 15.75a3 3 0 0 1-3-3V4.5a3 3 0 1 1 6 0v8.25a3 3 0 0 1-3 3Z" />
                         </svg>
                     </button>
                 </div>
-                <p class="text-sm text-gray-600 mb-2">De volledige tekst of de kernpunten voor het artikel.</p>
+                <p class="text-sm text-slate-400 mb-2">De volledige tekst of de kernpunten voor het artikel.</p>
                 <div class="relative">
                     <textarea id="toelichting" name="toelichting" rows="6" required
-                        class="w-full px-5 py-4 rounded-xl bg-gray-50 border-2 border-transparent focus:bg-white focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10 outline-none transition-all duration-300 font-medium placeholder-gray-400 resize-none"
+                        class="w-full px-5 py-4 rounded-xl bg-[#0A0A0A] border border-white/10 text-white focus:outline-none focus:border-violet-500/50 focus:ring-4 focus:ring-violet-500/10 transition-all duration-300 font-medium placeholder-slate-600 resize-none"
                         placeholder="Typ hier het artikel of de inhoud..."></textarea>
                     <div id="micStatus" class="absolute top-2 right-2 hidden">
                         <span class="flex h-3 w-3">
@@ -75,48 +75,48 @@ try {
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Doelgroep -->
                 <div class="space-y-2">
-                    <label for="waarom" class="block font-heading font-semibold text-gray-900 text-lg">Voor wie is dit bedoeld?</label>
+                    <label for="waarom" class="block font-heading font-semibold text-white text-lg">Voor wie is dit bedoeld?</label>
                     <input type="text" id="waarom" name="waarom"
-                        class="w-full px-5 py-4 rounded-xl bg-gray-50 border-2 border-transparent focus:bg-white focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10 outline-none transition-all duration-300 font-medium placeholder-gray-400"
+                        class="w-full px-5 py-4 rounded-xl bg-[#0A0A0A] border border-white/10 text-white focus:outline-none focus:border-violet-500/50 focus:ring-4 focus:ring-violet-500/10 transition-all duration-300 font-medium placeholder-slate-600"
                         placeholder="Bijv: Klanten, partners..." />
                 </div>
                 
                 <!-- Wanneer plaatsen? -->
                 <div class="space-y-2">
-                    <label for="wanneer" class="block font-heading font-semibold text-gray-900 text-lg">Wanneer publiceren?</label>
+                    <label for="wanneer" class="block font-heading font-semibold text-white text-lg">Wanneer publiceren?</label>
                     <input type="text" id="wanneer" name="wanneer"
-                        class="w-full px-5 py-4 rounded-xl bg-gray-50 border-2 border-transparent focus:bg-white focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10 outline-none transition-all duration-300 font-medium placeholder-gray-400"
+                        class="w-full px-5 py-4 rounded-xl bg-[#0A0A0A] border border-white/10 text-white focus:outline-none focus:border-violet-500/50 focus:ring-4 focus:ring-violet-500/10 transition-all duration-300 font-medium placeholder-slate-600"
                         placeholder="Bijv: Zo snel mogelijk, 1 mei" />
                 </div>
             </div>
 
             <!-- Betrokkenen -->
             <div class="space-y-2">
-                <label for="partners" class="block font-heading font-semibold text-gray-900 text-lg">Betrokkenen / Bronnen</label>
+                <label for="partners" class="block font-heading font-semibold text-white text-lg">Betrokkenen / Bronnen</label>
                 <input type="text" id="partners" name="partners"
-                    class="w-full px-5 py-4 rounded-xl bg-gray-50 border-2 border-transparent focus:bg-white focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10 outline-none transition-all duration-300 font-medium placeholder-gray-400"
+                    class="w-full px-5 py-4 rounded-xl bg-[#0A0A0A] border border-white/10 text-white focus:outline-none focus:border-violet-500/50 focus:ring-4 focus:ring-violet-500/10 transition-all duration-300 font-medium placeholder-slate-600"
                     placeholder="Namen van betrokkenen of links naar bronmateriaal..." />
             </div>
 
             <!-- Foto's/video's (File Input & Link) -->
             <div class="space-y-4">
                 <div>
-                    <label class="block font-heading font-semibold text-gray-900 text-lg">Foto's / Video's Uploaden</label>
-                    <p class="text-sm text-gray-600 mb-4">Selecteer direct beelden vanaf je apparaat of vul een WeTransfer link in.</p>
+                    <label class="block font-heading font-semibold text-white text-lg">Foto's / Video's Uploaden</label>
+                    <p class="text-sm text-slate-400 mb-4">Selecteer direct beelden vanaf je apparaat of vul een WeTransfer link in.</p>
                 </div>
 
                 <!-- Custom Drag & Drop / File Input -->
                 <div class="relative group cursor-pointer">
                     <input type="file" id="fotos" name="fotosUpload" multiple accept="image/*,video/*" class="absolute inset-0 w-full h-full opacity-0 cursor-pointer z-10" />
-                    <div id="dropzone" class="w-full p-8 rounded-2xl border-2 border-dashed border-violet/30 bg-violet/5 group-hover:bg-violet/10 group-hover:border-violet/50 transition-all text-center flex flex-col items-center justify-center gap-3">
-                        <div class="w-12 h-12 rounded-full bg-white text-violet flex items-center justify-center shadow-sm">
+                    <div id="dropzone" class="w-full p-8 rounded-2xl border-2 border-dashed border-white/20 bg-white/5 group-hover:bg-white/10 transition-all text-center flex flex-col items-center justify-center gap-3">
+                        <div class="w-12 h-12 rounded-full bg-white/10 text-violet-400 flex items-center justify-center border border-white/5">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M12 16.5V9.75m0 0 3 3m-3-3-3 3M6.75 19.5a4.5 4.5 0 0 1-1.41-8.775 5.25 5.25 0 0 1 10.233-2.33 3 3 0 0 1 3.758 3.848A3.752 3.752 0 0 1 18 19.5H6.75Z" />
                             </svg>
                         </div>
                         <div>
-                            <span class="font-bold text-violet">Klik hier</span> of sleep bestanden
-                            <p class="text-xs text-violet/60 mt-1">Ondersteunt: JPG, PNG, MP4, MOV</p>
+                            <span class="font-bold text-white">Klik hier</span> of sleep bestanden
+                            <p class="text-xs text-slate-400 mt-1">Ondersteunt: JPG, PNG, MP4, MOV</p>
                         </div>
                         <!-- File Preview Container -->
                         <div id="filePreview" class="w-full mt-4 flex flex-wrap gap-2 justify-center empty:hidden"></div>
@@ -125,9 +125,9 @@ try {
 
                 <!-- Fallback Link Input -->
                 <div class="flex items-center gap-3">
-                    <div class="text-sm text-gray-400 font-medium whitespace-nowrap">Of plak een link:</div>
+                    <div class="text-sm text-slate-400 font-medium whitespace-nowrap">Of plak een link:</div>
                     <input type="text" id="fotosLink" name="fotosLink"
-                        class="w-full px-4 py-3 rounded-xl bg-gray-50 border-2 border-transparent focus:bg-white focus:border-violet/50 focus:ring-4 focus:ring-violet/10 outline-none transition-all duration-300 font-medium placeholder-gray-400 text-sm"
+                        class="w-full px-4 py-3 rounded-xl bg-[#0A0A0A] border border-white/10 text-white focus:outline-none focus:border-violet-500/50 focus:ring-4 focus:ring-violet-500/10 transition-all duration-300 font-medium placeholder-slate-600 text-sm"
                         placeholder="bijv: https://we.tl/..." />
                 </div>
             </div>
@@ -135,9 +135,9 @@ try {
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <!-- Auteur / Contactpersoon -->
                 <div class="space-y-2">
-                    <label for="contactPersoon" class="block font-heading font-semibold text-gray-900 text-lg">Afzender / Auteur</label>
+                    <label for="contactPersoon" class="block font-heading font-semibold text-white text-lg">Afzender / Auteur</label>
                     {parsedTeamMembers.length > 0 ? (
-                        <select id="contactPersoon" name="contactPersoon" class="w-full px-5 py-4 rounded-xl bg-gray-50 border-2 border-transparent focus:bg-white focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10 outline-none transition-all duration-300 font-medium appearance-none cursor-pointer">
+                        <select id="contactPersoon" name="contactPersoon" class="w-full px-5 py-4 rounded-xl bg-[#0A0A0A] border border-white/10 text-white focus:outline-none focus:border-violet-500/50 focus:ring-4 focus:ring-violet-500/10 transition-all duration-300 font-medium appearance-none cursor-pointer">
                             <option value="">Selecteer wie je bent...</option>
                             {parsedTeamMembers.map(member => (
                                 <option value={member}>{member}</option>
@@ -146,23 +146,23 @@ try {
                         </select>
                     ) : (
                         <input type="text" id="contactPersoon" name="contactPersoon"
-                            class="w-full px-5 py-4 rounded-xl bg-gray-50 border-2 border-transparent focus:bg-white focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10 outline-none transition-all duration-300 font-medium placeholder-gray-400"
+                            class="w-full px-5 py-4 rounded-xl bg-[#0A0A0A] border border-white/10 text-white focus:outline-none focus:border-violet-500/50 focus:ring-4 focus:ring-violet-500/10 transition-all duration-300 font-medium placeholder-slate-600"
                             placeholder="Jouw Naam" />
                     )}
                 </div>
 
                 <!-- Contactgegevens -->
                 <div class="space-y-2">
-                    <label for="contactGegevens" class="block font-heading font-semibold text-gray-900 text-lg">Contactgegevens</label>
+                    <label for="contactGegevens" class="block font-heading font-semibold text-white text-lg">Contactgegevens</label>
                     <input type="text" id="contactGegevens" name="contactGegevens"
-                        class="w-full px-5 py-4 rounded-xl bg-gray-50 border-2 border-transparent focus:bg-white focus:border-cyan-500/50 focus:ring-4 focus:ring-cyan-500/10 outline-none transition-all duration-300 font-medium placeholder-gray-400"
+                        class="w-full px-5 py-4 rounded-xl bg-[#0A0A0A] border border-white/10 text-white focus:outline-none focus:border-violet-500/50 focus:ring-4 focus:ring-violet-500/10 transition-all duration-300 font-medium placeholder-slate-600"
                         placeholder="E-mailadres of 06-nummer" />
                 </div>
             </div>
 
-            <div class="pt-4">
+            <div class="pt-4 border-t border-white/10">
                 <button type="submit" id="submitBtn"
-                    class="group w-full bg-gray-900 hover:bg-black text-white font-heading font-bold text-lg py-5 rounded-xl shadow-lg hover:shadow-2xl hover:shadow-cyan-500/20 transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2">
+                    class="group w-full bg-white text-black font-heading font-bold text-lg py-5 rounded-xl shadow-[0_0_20px_rgba(255,255,255,0.2)] hover:shadow-[0_0_30px_rgba(255,255,255,0.4)] transform hover:-translate-y-1 transition-all duration-300 flex items-center justify-center gap-2">
                     <span id="submitText">Artikel Indienen</span>
                     <svg id="submitIcon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-5 group-hover:translate-x-1 transition-transform">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M6 12 3.269 3.125A59.769 59.769 0 0 1 21.485 12 59.768 59.768 0 0 1 3.27 20.875L5.999 12Zm0 0h7.5" />
